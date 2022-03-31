@@ -146,43 +146,21 @@ namespace Loupedeck.NanoleafControlPlugin.Commands.Base
         /// <inheritdoc/>
         protected override BitmapImage GetAdjustmentImage(String actionParameter, PluginImageSize imageSize)
         {
-            if (!this.TryGetDevice(actionParameter, out var device, true))
+            if (String.IsNullOrEmpty(actionParameter) || !this.TryGetDevice(actionParameter, out var device, true))
             {
-                return null;
+                return base.GetAdjustmentImage(actionParameter, imageSize);
             }
 
             var info = this._cachedValues.Find(x => x.Id == device.Id);
             if (info == null)
             {
-                return null;
+                return base.GetAdjustmentImage(actionParameter, imageSize);
             }
 
             var (min, max) = this.GetMinMax(device);
-
-            var bitmap = new Bitmap(70, 20);
-            var g = Graphics.FromImage(bitmap);
-
             var currentValue = Math.Max(min, Math.Min(max, info.Value + info.Diff));
-            var percentage = (currentValue - (Single)min) / (max - (Single)min) * 100;
 
-            var bgColor = Color.FromArgb(156, 156, 156);
-            var textColor = Color.White;
-            var rect = new Rectangle(0, 0, bitmap.Width - 1, bitmap.Height - 1);
-            var font = new Font("Arial", 20, FontStyle.Bold);
-            var brush = new SolidBrush(textColor);
-            var width = (Int32)(rect.Width * percentage / 100.0);
-            var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-
-            g.DrawRectangle(new Pen(bgColor), rect);
-            g.FillRectangle(new SolidBrush(bgColor), 0, 0, width, rect.Height);
-            g.FillRectangle(new SolidBrush(Color.FromArgb(150, 0, 0, 0)), 0, 0, bitmap.Width, bitmap.Height);
-            g.DrawAutoAdjustedFont(currentValue.ToString(CultureInfo.CurrentCulture), font, brush, rect, sf, 12);
-
-            bitmap.RotateFlip(RotateFlipType.Rotate270FlipNone);
-
-            var ms = new MemoryStream();
-            bitmap.Save(ms, ImageFormat.Png);
-            return new BitmapImage(ms.ToArray());
+            return DrawingHelper.DrawVolumeBar(imageSize, new BitmapColor(156, 156, 156), BitmapColor.White, currentValue, min, max);
         }
 
         /// <summary>
