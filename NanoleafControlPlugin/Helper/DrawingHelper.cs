@@ -26,6 +26,7 @@ namespace Loupedeck.NanoleafControlPlugin.Helper
     using System.Drawing;
     using System.Drawing.Drawing2D;
     using System.Drawing.Imaging;
+    using System.Globalization;
     using System.IO;
 
     public static class DrawingHelper
@@ -103,7 +104,7 @@ namespace Loupedeck.NanoleafControlPlugin.Helper
 
         public static BitmapImage DrawDefaultImage(String innerText, String outerText, Color brushColor)
         {
-            var imageDimension = 90;
+            var imageDimension = 80;
             var dimension = 70;
             using var bitmap = new Bitmap(imageDimension, imageDimension);
             using var g = Graphics.FromImage(bitmap);
@@ -120,7 +121,7 @@ namespace Loupedeck.NanoleafControlPlugin.Helper
             using var ms = new MemoryStream();
             bitmap.Save(ms, ImageFormat.Png);
 
-            return LoadBitmapImage(new BitmapImage(ms.ToArray()), outerText);
+            return LoadBitmapImage(BitmapImage.FromArray(ms.ToArray()), outerText);
         }
 
         public static void DrawAutoAdjustedFont(this Graphics g, String s, Font font, Brush brush, Single x,
@@ -183,5 +184,25 @@ namespace Loupedeck.NanoleafControlPlugin.Helper
 
             return smallestOnFail ? testFont : originalFont;
         }
+
+        public static BitmapImage DrawVolumeBar(PluginImageSize imageSize, BitmapColor backgroundColor, BitmapColor foregroundColor, Single currentValue, Int32 minValue, Int32 maxValue)
+        {
+            var dim = imageSize.GetDimension();
+            var percentage = (currentValue - minValue) / (maxValue - minValue) * 100;
+            var width = (Int32)(dim * percentage / 100.0);
+
+            var builder = new BitmapBuilder(dim, dim);
+            builder.Clear(BitmapColor.Black);
+
+            builder.Translate(dim / 4, 0);
+            builder.DrawRectangle(0, 0, dim / 2, dim - 1, backgroundColor);
+            builder.FillRectangle(0, dim, dim / 2, -width, backgroundColor);
+            builder.FillRectangle(0, 0, dim / 2, dim - 1, new BitmapColor(0, 0, 0, 150));
+            builder.ResetMatrix();
+            builder.DrawText(currentValue.ToString(CultureInfo.CurrentCulture), foregroundColor);
+            return builder.ToImage();
+        }
+
+        public static Int32 GetDimension(this PluginImageSize size) => size == PluginImageSize.Width60 ? 50 : 80;
     }
 }
