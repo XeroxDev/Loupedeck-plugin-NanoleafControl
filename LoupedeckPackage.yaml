@@ -1,18 +1,15 @@
-﻿type: plugin4
-name: 'NanoleafControl'
-displayName: 'NanoleafControl'
-version: 1.0.0
+type: plugin4
+name: NanoleafControl
+displayName: NanoleafControl
+version: 2.0.0
 author: XeroxDev
 copyright: Copyright (c) 2021 Dominic Ris
-
 supportedDevices:
   - LoupedeckCt
   - LoupedeckLive
-
 pluginFileName: NanoleafControlPlugin.dll
 pluginFolderWin: ./bin/plugin/
 pluginFolderMac: ./bin/plugin/
-
 license: MIT
 licenseUrl: https://opensource.org/licenses/MIT
 homePageUrl: https://help.xeroxdev.de/en/loupedeck/nanoleaf-control/home
