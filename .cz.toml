@@ -1,0 +1,8 @@
+[tool.commitizen]
+version = "2.0.1"
+bump_message = "chore(release): $current_version -> $new_version [skip-ci]"
+version_files = [
+    "src/NanoleafControlPlugin/Properties/AssemblyInfo.cs",
+    "src/NanoleafControlPlugin/metadata/LoupedeckPackage.yaml"
+]
+tag_format = "v$version"
