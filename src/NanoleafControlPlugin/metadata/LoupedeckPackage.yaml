@@ -15,7 +15,7 @@ displayName: NanoleafControl
 pluginFileName: NanoleafControlPlugin.dll
 
 # Plugin version.
-version: 2.0.0
+version: 3.0.0
 
 # Author of the plugin. The author can be a company or an individual developer.
 author: XeroxDev
