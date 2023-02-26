@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BEBD80C4-0BFA-4F0E-A812-3C1FE6A52565}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Loupedeck.NanoleafControlPlugin</RootNamespace>
+    <AssemblyName>NanoleafControlPlugin</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>$(SolutionDir)..\obj\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(SolutionDir)..\bin\</BaseOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath Condition="$(OS) == 'Windows_NT'">$(LocalAppData)\Loupedeck\Plugins\NanoleafControl\win\</OutputPath>
+    <OutputPath Condition="$(OS) != 'Windows_NT'">$(HOME)/.local/share/Loupedeck/Plugins/NanoleafControl/mac/</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath Condition="$(OS) == 'Windows_NT'">$(BaseOutputPath)$(Configuration)\win\</OutputPath>
+    <OutputPath Condition="$(OS) != 'Windows_NT'">$(BaseOutputPath)$(Configuration)/mac/</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PluginApi, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath Condition="$(OS) == 'Windows_NT'">C:\Program Files (x86)\Loupedeck\Loupedeck2\PluginApi.dll</HintPath>
+      <HintPath Condition="$(OS) != 'Windows_NT'">/Applications/Loupedeck.app/Contents/MonoBundle/PluginApi.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp">
+      <HintPath>C:\Program Files (x86)\Loupedeck\Loupedeck2\SkiaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Reactive, Version=5.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.5.0.0\lib\net472\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Zeroconf, Version=3.6.0.0, Culture=neutral, PublicKeyToken=dbbfcdb374507df0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Zeroconf.3.6.11\lib\netstandard2.0\Zeroconf.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actions\AuthenticateCommand.cs" />
+    <Compile Include="Actions\Base\ColorAdjustment.cs" />
+    <Compile Include="Actions\Base\NanoleafPluginDynamicAdjustment.cs" />
+    <Compile Include="Actions\Base\NanoleafPluginDynamicCommand.cs" />
+    <Compile Include="Actions\Colors\BrightnessAdjustment.cs" />
+    <Compile Include="Actions\Colors\HueAdjustment.cs" />
+    <Compile Include="Actions\Colors\SaturationAdjustment.cs" />
+    <Compile Include="Actions\EffectCommand.cs" />
+    <Compile Include="Actions\ToggleStateCommand.cs" />
+    <Compile Include="Helper\Debouncer.cs" />
+    <Compile Include="Helper\DrawingHelper.cs" />
+    <Compile Include="Helper\MessageHelper.cs" />
+    <Compile Include="Nanoleaf\Colors\ColorConverter.cs" />
+    <Compile Include="Nanoleaf\Colors\Hsv.cs" />
+    <Compile Include="Nanoleaf\Core\Constants.cs" />
+    <Compile Include="Nanoleaf\Discovery\NanoleafDiscovery.cs" />
+    <Compile Include="Nanoleaf\Exceptions\NanoleafHttpException.cs" />
+    <Compile Include="Nanoleaf\Exceptions\NanoleafResourceNotFoundException.cs" />
+    <Compile Include="Nanoleaf\Exceptions\NanoleafUnauthorizedException.cs" />
+    <Compile Include="Nanoleaf\Helpers\Serializer.cs" />
+    <Compile Include="Nanoleaf\Interfaces\INanoleafClient.cs" />
+    <Compile Include="Nanoleaf\Models\Requests\Brightness\IncrementBrightnessModel.cs" />
+    <Compile Include="Nanoleaf\Models\Requests\Brightness\SetBrightnessModel.cs" />
+    <Compile Include="Nanoleaf\Models\Requests\ColorTemperature\IncrementColorTemperatureModel.cs" />
+    <Compile Include="Nanoleaf\Models\Requests\ColorTemperature\SetColorTemperatureModel.cs" />
+    <Compile Include="Nanoleaf\Models\Requests\Effects\SelectEffectModel.cs" />
+    <Compile Include="Nanoleaf\Models\Requests\Effects\SelectEternalModel.cs" />
+    <Compile Include="Nanoleaf\Models\Requests\HsvRequest.cs" />
+    <Compile Include="Nanoleaf\Models\Requests\Hue\IncrementHueModel.cs" />
+    <Compile Include="Nanoleaf\Models\Requests\Hue\SetHueModel.cs" />
+    <Compile Include="Nanoleaf\Models\Requests\OnOffRequest.cs" />
+    <Compile Include="Nanoleaf\Models\Requests\Saturation\IncrementSaturationModel.cs" />
+    <Compile Include="Nanoleaf\Models\Requests\Saturation\SetSaturationModel.cs" />
+    <Compile Include="Nanoleaf\Models\Responses\Brightness.cs" />
+    <Compile Include="Nanoleaf\Models\Responses\ColorTemperature.cs" />
+    <Compile Include="Nanoleaf\Models\Responses\Effects.cs" />
+    <Compile Include="Nanoleaf\Models\Responses\Hue.cs" />
+    <Compile Include="Nanoleaf\Models\Responses\Info.cs" />
+    <Compile Include="Nanoleaf\Models\Responses\Layout.cs" />
+    <Compile Include="Nanoleaf\Models\Responses\PanelLayout.cs" />
+    <Compile Include="Nanoleaf\Models\Responses\PowerStatus.cs" />
+    <Compile Include="Nanoleaf\Models\Responses\Saturation.cs" />
+    <Compile Include="Nanoleaf\Models\Responses\State.cs" />
+    <Compile Include="Nanoleaf\Models\Responses\Switch.cs" />
+    <Compile Include="Nanoleaf\Models\Responses\UserToken.cs" />
+    <Compile Include="Nanoleaf\NanoleafClient.cs" />
+    <Compile Include="Nanoleaf\NanoleafHttpClient.cs" />
+    <Compile Include="Nanoleaf\NanoleafStreamingClient.cs" />
+    <Compile Include="Nanoleaf\Types\Device.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="NanoleafControlApplication.cs" />
+    <Compile Include="NanoleafControlPlugin.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="metadata\LoupedeckPackage.yaml" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="metadata\Icon16x16.png" />
+    <Content Include="metadata\Icon256x256.png" />
+    <Content Include="metadata\Icon32x32.png" />
+    <Content Include="metadata\Icon48x48.png" />
+    <Content Include="Resources\Images\clear.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent Condition="$(OS) == 'Windows_NT'">call "$(ProjectDir)BuildEvents\postbuild.cmd" "$(ProjectDir)" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent Condition="$(OS) != 'Windows_NT'">sh "$(ProjectDir)BuildEvents\postbuild" "$(ProjectDir)" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
